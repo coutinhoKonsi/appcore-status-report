@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Squad AppCore — Relatório Executivo 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<script>
+Chart.register(ChartDataLabels);
+Chart.defaults.plugins.datalabels={display:false};
+
+
+
+function switchTab(id){
+  document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active')});
+  document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active')});
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// S19 Status Donut (deferred to bottom script block)
+
+// S19 Risk projection (deferred to bottom script block)
+
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.6}
+.container{max-width:960px;margin:0 auto;padding:32px 24px}
+.header{text-align:center;padding:48px 24px;background:linear-gradient(135deg,#1e1b4b,#4338ca);color:#fff;border-radius:20px;margin-bottom:40px}
+.header h1{font-size:32px;font-weight:800;margin-bottom:8px}
+.header p{font-size:15px;color:#c7d2fe}
+.section{background:#fff;border-radius:16px;padding:32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid #e2e8f0}
+.section h2{font-size:20px;font-weight:700;color:#1e1b4b;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.section h2 .num{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:24px}
+.stat{background:#f8fafc;border-radius:12px;padding:12px 8px;border:1px solid #e2e8f0;text-align:center}
+.stat .val{font-size:24px;font-weight:800;color:#6366f1}
+.stat .lbl{font-size:12px;font-weight:600;color:#64748b}
+.stat .sub{font-size:11px;color:#94a3b8}
+.chart-wrap{position:relative;height:320px;margin:20px 0}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
+th{background:#f1f5f9;padding:10px 12px;text-align:left;font-weight:700;color:#475569;border-bottom:2px solid #e2e8f0;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+td{padding:8px 12px;border-bottom:1px solid #f1f5f9}
+tr:hover td{background:#fafafa}
+.highlight{color:#6366f1;font-weight:700}
+.callout{background:linear-gradient(135deg,#f0f0ff,#fdf4ff);border:1px solid #e0e0ff;border-radius:12px;padding:20px;margin:20px 0;font-size:14px;color:#334155}
+.callout strong{color:#4338ca}
+.phase{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
+.phase-card{border-radius:12px;padding:16px;border-left:4px solid}
+.phase-card h3{font-size:14px;font-weight:700;margin-bottom:4px}
+.phase-card p{font-size:12px;color:#64748b}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0}
+.team-card{border-radius:12px;padding:16px;text-align:center;border:1px solid #e2e8f0;background:#fafafa}
+.team-card .avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;margin:0 auto 8px}
+.team-card .name{font-weight:700;font-size:14px}
+.team-card .role{font-size:11px;color:#64748b;margin-bottom:8px}
+.team-card .nums{display:flex;justify-content:center;gap:16px}
+.team-card .nums div span{display:block}
+.team-card .nums .n{font-size:20px;font-weight:800}
+.team-card .nums .l{font-size:10px;color:#94a3b8}
+.roadmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:16px 0}
+.roadmap-card{border-radius:12px;padding:16px;background:#f8fafc;border:1px solid #e2e8f0}
+.roadmap-card h3{font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.roadmap-card h3 .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.roadmap-card .item{font-size:12px;color:#475569;padding:3px 0;border-bottom:1px solid #f1f5f9}
+.rec{background:linear-gradient(135deg,#eef2ff,#faf5ff);border-radius:16px;padding:24px;border:1px solid #c7d2fe;margin:16px 0}
+.rec h3{color:#4338ca;font-size:16px;font-weight:700;margin-bottom:12px}
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rec-box{background:#fff;border-radius:8px;padding:12px;border:1px solid #e0e7ff}
+.rec-box .t{font-size:13px;font-weight:700;color:#1e293b}
+.rec-box .s{font-size:11px;color:#64748b}
+.tese{background:#1e1b4b;border-radius:16px;padding:28px;color:#fff;margin:16px 0}
+.tese .row{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
+.tese .row:last-child{margin-bottom:0}
+.tese .icon{font-size:18px;flex-shrink:0}
+.tese .txt{font-size:14px;color:#e0e7ff;line-height:22px}
+.footer{text-align:center;padding:24px;color:#94a3b8;font-size:11px}
+@media print{body{background:#fff}.section{box-shadow:none;break-inside:avoid}.header{background:#1e1b4b!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+.tab-bar{display:flex;gap:4px;margin-bottom:28px;border-bottom:2px solid #e2e8f0;padding-bottom:0}
+.tab-btn{padding:12px 24px;border:none;background:transparent;cursor:pointer;font-size:14px;font-weight:600;color:#94a3b8;border-bottom:3px solid transparent;transition:all .2s}
+.tab-btn.active{color:#6366f1;border-bottom-color:#6366f1}
+.tab-btn:hover{color:#6366f1}
+.tab-content{display:none}
+.tab-content.active{display:block}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <img src="https://res.cloudinary.com/dc5gzexeu/image/upload/v1768869880/logo-konsi_bdvk3v.png" style="height:40px;margin-bottom:16px;filter:brightness(0) invert(1)" alt="Konsi"/><br/><p style="font-size:12px;text-transform:uppercase;letter-spacing:2px;color:#a5b4fc;margin-bottom:8px">Relatório Executivo</p>
+    <h1>Squad AppCore — Evolução & Capacidade</h1>
+    <p>Jul/2025 → Mar/2026 · 19 Sprints · 243 Cards entregues · S19 em andamento (10/44) · Dados extraídos do ClickUp</p>
+  </div>
+
+<div class="tab-bar">
+<button class="tab-btn active" onclick="switchTab('geral')">Relatorio Geral</button>
+<button class="tab-btn" onclick="switchTab('sprint')" style="color:#64748b">Sprint 18 (fechada - 22/03/2026)</button>
+<button class="tab-btn" onclick="switchTab('s19')" style="color:#ef4444">Sprint 19 AO VIVO</button>
+</div>
+<div id="tab-geral" class="tab-content active">
+
+
+  <div class="section">
+    <h2><span class="num">1</span> Métricas Chave</h2>
+    <div class="stats">
+      <div class="stat"><div class="val">243</div><div class="lbl">Total Cards</div><div class="sub">233 fechados + S19 ao vivo</div></div>
+      <div class="stat"><div class="val" style="color:#f59e0b">12.9</div><div class="lbl">Média Geral</div><div class="sub">cards/sprint (fechadas)</div></div>
+      <div class="stat"><div class="val" style="color:#10b981">15.8</div><div class="lbl">Média Recente</div><div class="sub">S9→S18</div></div>
+      <div class="stat"><div class="val" style="color:#ef4444">10/44</div><div class="lbl">S19 ao Vivo</div><div class="sub">2 dias úteis restantes</div></div>
+    </div>
+    <div class="chart-wrap"><canvas id="chartOverview"></canvas></div>
+  </div>
+
+  
+  <div class="section">
+    <h2><span class="num">2</span> Mensagem Executiva</h2>
+    <div style="background:linear-gradient(135deg,#f0f0ff,#f0f0ff);border-radius:12px;padding:24px;border:1px solid #c7d2fe">
+      <div style="display:flex;gap:10px;margin-bottom:12px;align-items:flex-start"><span style="color:#6366f1;font-weight:700;font-size:16px">&#8594;</span><span style="font-size:14px;line-height:22px;color:#1e293b">O time evoluiu de correcao operacional para plataforma, observabilidade e growth instrumentation</span></div>
+      <div style="display:flex;gap:10px;margin-bottom:12px;align-items:flex-start"><span style="color:#6366f1;font-weight:700;font-size:16px">&#8594;</span><span style="font-size:14px;line-height:22px;color:#1e293b">A media subiu de 10,2 para 13,9 cards/sprint desde set/2025</span></div>
+      <div style="display:flex;gap:10px;margin-bottom:12px;align-items:flex-start"><span style="color:#6366f1;font-weight:700;font-size:16px">&#8594;</span><span style="font-size:14px;line-height:22px;color:#1e293b">O score de impacto x complexidade subiu de 11 para 16,1</span></div>
+      <div style="display:flex;gap:10px;margin-bottom:12px;align-items:flex-start"><span style="color:#6366f1;font-weight:700;font-size:16px">&#8594;</span><span style="font-size:14px;line-height:22px;color:#1e293b">O roadmap 12M e consistente, mas representa agenda de produto + arquitetura + plataforma</span></div>
+      <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#6366f1;font-weight:700;font-size:16px">&#8594;</span><span style="font-size:14px;line-height:22px;color:#1e293b">Com o time core atual + IA, existe capacidade para avancar, mas nao para absorver o plano inteiro</span></div>
+    </div>
+  </div>
+
+<div class="section">
+    <h2><span class="num">3</span> Fases da Evolução</h2>
+    <div class="phase">
+      <div class="phase-card" style="border-color:#f59e0b;background:#fffbeb"><h3>Jul–Ago/25: Base Operacional</h3><p>Bugs, INSS/CLT, correções de fluxo, suporte à jornada</p></div>
+      <div class="phase-card" style="border-color:#6366f1;background:#eef2ff"><h3>Set–Out/25: Estabilização</h3><p>Segurança, estruturação do produto e app</p></div>
+      <div class="phase-card" style="border-color:#10b981;background:#f0fdf4"><h3>Nov/25–Jan/26: Jornada & Produto</h3><p>Pendências, termos, eventos, KonsiAPI</p></div>
+      <div class="phase-card" style="border-color:#ef4444;background:#fef2f2"><h3>Fev–Mar/26: Plataforma</h3><p>OpenTelemetry, growth events, IA, refactors</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">4</span> Volume por Sprint</h2>
+    <div class="chart-wrap"><canvas id="chartCards"></canvas></div>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">5</span> Score Executivo (Impacto × Complexidade)</h2>
+    <div class="chart-wrap"><canvas id="chartScore"></canvas></div>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">6</span> Sprint Scorecard</h2>
+    <p style="font-size:12px;color:#64748b;margin-bottom:4px">S18 fechada em 22/03 com 26 cards entregues (de 33 planejados). 7 cards transbordaram para S19.</p>    <p style="font-size:12px;color:#f59e0b;margin-bottom:8px">* S19 em andamento — 44 cards planejados (+11 em observacao de sprints anteriores). 10 entregues (8 done + 1 em producao + 1 monitoring). AC-1163 (lead GovRJ) adicionado em andamento. AC-1137 (deletar mongo) concluido. AC-1124 (FB Ads) em desenvolvimento. Dados ao vivo na aba Sprint 19.</p>
+    <table>
+      <thead><tr><th>Sprint</th><th>Período</th><th>Cards</th><th>Devs</th><th>Cards/Dev</th><th>Impacto</th><th>Score</th></tr></thead>
+      <tbody id="sprintTable"></tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">7</span> Entrega por Membro (desde Set/25)</h2>
+    <div class="team-grid">
+      <div class="team-card"><img src="https://avatars.slack-edge.com/2025-04-17/8773473943154_7c620c7efdb48267aca8_original.jpg" class="avatar" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:3px solid #6366f1;margin:0 auto 8px"/><div class="name">Guilherme E.</div><div class="role">Software Engineer III / TL</div><div class="nums"><div><span class="n" style="color:#6366f1">89</span><span class="l">cards</span></div><div><span class="n" style="color:#6366f1">13</span><span class="l">sprints</span></div></div></div>
+      <div class="team-card"><img src="https://avatars.slack-edge.com/2026-01-08/10288183002784_2d13651cd05f6b236ef8_original.jpg" class="avatar" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:3px solid #f59e0b;margin:0 auto 8px"/><div class="name">Ricardo C.</div><div class="role">Manager (coringa)</div><div class="nums"><div><span class="n" style="color:#f59e0b">36</span><span class="l">cards</span></div><div><span class="n" style="color:#f59e0b">8</span><span class="l">sprints</span></div></div></div>
+      <div class="team-card"><img src="https://avatars.slack-edge.com/2025-04-22/8811579323792_38ff15b4b8fa0be4ffe9_original.png" class="avatar" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:3px solid #10b981;margin:0 auto 8px"/><div class="name">Daniel H.</div><div class="role">Software Engineer I</div><div class="nums"><div><span class="n" style="color:#10b981">22</span><span class="l">cards</span></div><div><span class="n" style="color:#10b981">9</span><span class="l">sprints</span></div></div></div>
+      <div class="team-card"><img src="https://avatars.slack-edge.com/2025-04-17/8763391665046_d4c0a129203fec07495a_original.jpg" class="avatar" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:3px solid #8b5cf6;margin:0 auto 8px"/><div class="name">Luciano O.</div><div class="role">Software Engineer I</div><div class="nums"><div><span class="n" style="color:#8b5cf6">22</span><span class="l">cards</span></div><div><span class="n" style="color:#8b5cf6">5</span><span class="l">sprints</span></div></div></div>
+      <div class="team-card"><img src="https://avatars.slack-edge.com/2026-02-07/10457407800659_d972b64c1e9378838001_original.jpg" class="avatar" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:3px solid #ec4899;margin:0 auto 8px"/><div class="name">Luiz E.</div><div class="role">Software Engineer II (ramp-up)</div><div class="nums"><div><span class="n" style="color:#ec4899">4</span><span class="l">cards</span></div><div><span class="n" style="color:#ec4899">1</span><span class="l">sprint</span></div></div></div>
+    </div>
+    <div class="callout"><strong>Nota:</strong> Guilherme é o principal eixo de execução. Ricardo atua como coringa (fora do capacity base). Luiz em ramp-up — sem base histórica suficiente para comparação.</div>
+    <div class="chart-wrap"><canvas id="chartTeam"></canvas></div>
+
+    <h3 style="font-size:16px;font-weight:700;color:#1e1b4b;margin:24px 0 8px;display:flex;align-items:center;gap:8px"><span style="color:#ef4444">◆</span> Impact Points por Membro (Complexidade Total)</h3>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px">Soma dos pontos de impacto × complexidade de cada card entregue desde Set/25.</p>
+    <div class="chart-wrap"><canvas id="chartComplexity"></canvas></div>
+
+    <h3 style="font-size:16px;font-weight:700;color:#1e1b4b;margin:24px 0 8px;display:flex;align-items:center;gap:8px"><span style="color:#06b6d4">◆</span> Densidade de Complexidade (Média por Card)</h3>
+    <p style="font-size:12px;color:#64748b;margin-bottom:12px">Complexidade média por card entregue. Quanto maior, mais denso e estratégico foi o trabalho.</p>
+    <div class="chart-wrap"><canvas id="chartDensity"></canvas></div>
+  </div>
+
+  
+<div class="section">
+    <h2><span class="num">8</span> Roadmap 12M por Jornada</h2>
+    <div class="roadmap" id="roadmapGrid"></div>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">9</span> Capacidade Real 2026 — Demanda vs Oferta</h2>
+    <p style="font-size:14px;color:#94a3b8;margin-bottom:20px">Análise consolidada: doc planejamento (6 tarefas estimadas) + 43 tarefas do backlog ClickUp + roadmap 12M + buffer operacional.</p>
+    <h3 style="font-size:16px;font-weight:700;color:#ef4444;margin:16px 0 8px">Demanda Total: ~34–45 sprints de trabalho</h3>
+    <table><thead><tr><th>Fonte</th><th>Volume</th><th>Sprints</th></tr></thead><tbody><tr><td style="font-weight:600">Doc planejamento</td><td>Token GovRJ, FAQ, Ranking, GoRouter, FB Ads, PIX</td><td>~6,5</td></tr><tr><td style="font-weight:600">Backlog ClickUp</td><td>43 tarefas (segurança, auth, refactoring, bugs)</td><td>~8–12</td></tr><tr><td style="font-weight:600">Roadmap 12M</td><td>Auth, BFF, testes, design system, IA</td><td>~12–18</td></tr><tr><td style="font-weight:600">Despriorizadas + Buffer</td><td>C6 CLT + bugs/incidentes</td><td>~7–8</td></tr><tr style="background:#fef2f2;font-weight:700"><td style="color:#ef4444">TOTAL</td><td></td><td style="color:#ef4444">~34–45</td></tr></tbody></table>
+    <div class="stats">
+      <div class="stat"><div class="val" style="color:#94a3b8">2.4–2.7</div><div class="lbl">Base sem IA</div><div class="sub">FTE efetivos</div></div>
+      <div class="stat"><div class="val" style="color:#10b981">3.4–3.8</div><div class="lbl">Com IA (+40%)</div><div class="sub">FTE equivalentes</div></div>
+      <div class="stat"><div class="val">4 devs</div><div class="lbl">Time Core</div><div class="sub">+ Ricardo coringa</div></div>
+      <div class="stat"><div class="val" style="color:#f59e0b">~20</div><div class="lbl">Sprints restantes</div><div class="sub">Q2-Q4 2026</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Cenário</th><th>FTE Estimado</th><th>Sprints absorve</th><th>Cobertura</th><th>Gap</th></tr></thead>
+      <tbody>
+        <tr><td>Time atual + IA</td><td>3.4–3.8</td><td>~20</td><td style="color:#ef4444;font-weight:600">45–60%</td><td style="color:#ef4444">14–25 sprints</td></tr>
+        <tr><td>+1 hire + IA</td><td>4.2–4.8</td><td>~25</td><td style="color:#f59e0b;font-weight:600">55–75%</td><td style="color:#f59e0b">9–20 sprints</td></tr>
+        <tr style="background:#eef2ff;font-weight:700"><td style="color:#6366f1">+2 hires + IA ⭐</td><td>5.0–5.8</td><td>~30</td><td style="color:#10b981;font-weight:600">67–90%</td><td style="color:#10b981">4–15 sprints</td></tr>
+        <tr><td>+3 hires + IA</td><td>5.8–6.8</td><td>~35</td><td style="color:#10b981;font-weight:600">78–100%</td><td style="color:#10b981">0–10 sprints</td></tr>
+      </tbody>
+    </table>
+    <div class="chart-wrap"><canvas id="chartCapacity"></canvas></div>
+    <div class="callout"><strong>Leitura:</strong> O backlog operacional (doc planejamento + 43 tarefas do ClickUp) já soma ~15–18 sprints. Adicionando frentes estruturais e buffer, a demanda total ultrapassa o dobro da capacidade atual. O cenário de <strong>+2 hires</strong> é o mínimo para cobrir pipeline operacional + 1 frente estrutural por trimestre.</div>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">10</span> Recomendação de Headcount</h2>
+    <div class="rec">
+      <h3>Cenário recomendado: +2 engenheiros</h3>
+      <div class="rec-grid">
+        <div class="rec-box"><div class="t">1 Software Engineer III (Backend/Platform)</div><div class="s">Auth, BFF, infra</div></div>
+        <div class="rec-box"><div class="t">1 Software Engineer II/III</div><div class="s">App/plataforma/test automation</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">11</span> Tese Executiva</h2>
+    <div class="tese">
+      <div class="row"><span class="icon">✓</span><span class="txt">O roadmap 12M é coerente e forte</span></div>
+      <div class="row"><span class="icon">💰</span><span class="txt">A maior aposta com ROI imediato é Autenticação sem fricção</span></div>
+      <div class="row"><span class="icon">⚡</span><span class="txt">O maior gargalo estrutural é KonsiAPI → BFF + auth + testes precisam vir cedo</span></div>
+      <div class="row"><span class="icon">🤖</span><span class="txt">IA (+40%) melhora materialmente a velocidade</span></div>
+      <div class="row"><span class="icon">👥</span><span class="txt">Cenário recomendado: +2 hires para entregar o plano com segurança</span></div>
+      <div class="row"><span class="icon">⚠️</span><span class="txt">O problema não é performance — é desbalanceamento entre ambição e capacidade sustentável</span></div>
+    </div>
+  </div>
+
+  
+      <div class="callout">
+      <strong>Leitura de Capacidade vs Pipeline:</strong><br><br>
+      O backlog pronto soma <strong>~6,5 sprints</strong> de trabalho. Com a capacidade atual do time (3,4–3,8 FTE com IA), isso consome <strong>~3 a 4 meses</strong> do time operando em foco total — sem contar bugs, incidentes, e operação do dia a dia.<br><br>
+      Somando o item desprioritizado (C6 = 3 sprints) e os pendentes (GovAM + Auth por email), o pipeline total sobe para <strong>~12+ sprints de trabalho identificado</strong>.<br><br>
+      Isso <strong>antes mesmo</strong> de considerar o roadmap 12M com BFF, auth própria, testes automatizados, design system e IA.<br><br>
+      <strong>Conclusão:</strong> Apenas o backlog tático já visível pressiona a capacidade. O reforço de +2 engenheiros não é só para o roadmap estratégico — é para não sacrificar o pipeline operacional.
+    </div>
+  </div>
+
+  
+</div>
+<div id="tab-sprint" class="tab-content" style="max-width:960px;margin:0 auto;padding:0 24px">
+<div class="section" style="border:2px solid #6366f1">
+<h2><span class="num" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">!</span> Sprint 18 — Resultado Final (fechada)</h2>
+<p style="font-size:13px;color:#94a3b8;margin-bottom:16px">Sprint 18: 09/03 - 22/03/2026 | 26 cards | 5 devs ativos | <strong style="color:#f59e0b">Dados de 23/03/2026 18:00 — sprint encerrada</strong></p>
+<div style="background:linear-gradient(135deg,#eef2ff,#faf5ff);border-radius:10px;padding:16px;border:1px solid #c7d2fe;margin-bottom:20px">
+<div style="font-weight:700;font-size:14px;color:#4338ca;margin-bottom:8px">Objetivo da Sprint 18</div>
+<div style="font-size:13px;color:#312e81">1) Colocar Banco do Brasil em Producao<br>2) Iniciar implementacao da API de validacao de Documentos<br>3) Iniciar refatoracao da tela de ajustes</div>
+</div>
+
+<div class="stats">
+<div class="stat"><div class="val" style="color:#10b981">26</div><div class="lbl">Concluidos</div><div class="sub">done + monitoring + em producao</div></div>
+<div class="stat"><div class="val" style="color:#6366f1">3</div><div class="lbl">Aprovacao/Testes</div><div class="sub">PR validada + liberado testes</div></div>
+<div class="stat"><div class="val" style="color:#f59e0b">4</div><div class="lbl">Em desenvolvimento</div><div class="sub">em andamento + ajustes + PR</div></div>
+<div class="stat"><div class="val" style="color:#94a3b8">33</div><div class="lbl">Total Planejado</div><div class="sub">26 entregues + 7 transbordaram</div></div>
+</div>
+<div class="chart-wrap" style="height:260px"><canvas id="chartS18Status"></canvas></div>
+<h3 style="font-size:16px;font-weight:700;color:#1e1b4b;margin:20px 0 12px">Resultado Final da Sprint 18</h3>
+<table>
+<thead><tr><th>Risco</th><th>Qtd</th><th>Status</th><th>Expectativa</th></tr></thead>
+<tbody>
+<tr><td style="color:#10b981;font-weight:700">Entregue</td><td>26</td><td>Done / Monitoring</td><td>100%</td></tr>
+<tr><td style="color:#6366f1;font-weight:700">Em aprovacao/testes</td><td>3</td><td>PR validada (1) + Liberado testes (2)</td><td>Transbordou → S19</td></tr>
+<tr><td style="color:#f59e0b;font-weight:700">Em desenvolvimento</td><td>4</td><td>PR em validacao (1) + Em andamento (2) + Em ajustes (1)</td><td>Transbordou → S19</td></tr>
+</tbody>
+</table>
+<div class="chart-wrap" style="height:260px"><canvas id="chartS18Risk"></canvas></div>
+<h3 style="font-size:16px;font-weight:700;color:#1e1b4b;margin:20px 0 12px">Cards por Dev na Sprint 18</h3>
+<table>
+<thead><tr><th>Dev</th><th>Total</th><th>Concluidos</th><th>Transbordou</th><th>Destaques</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600">Ricardo C.</td><td>13</td><td style="color:#10b981;font-weight:600">12</td><td style="color:#f59e0b;font-weight:600">1</td><td style="font-size:11px;color:#94a3b8">PostHog POC, Flutter, GoRouter, PostHog F2, Crashlytics, GovRJ, GovAM, Mongo | <span style="color:#f59e0b">GOVSP bloqueado</span></td></tr>
+<tr><td style="font-weight:600">Guilherme E.</td><td>7</td><td style="color:#10b981;font-weight:600">6</td><td style="color:#f59e0b;font-weight:600">1</td><td style="font-size:11px;color:#94a3b8">Evento banner, FirebaseStorage, JSONMethodCodec, CI, SIM BB GOVSP, Fix UTC | <span style="color:#f59e0b">IA validacao docs</span></td></tr>
+<tr><td style="font-weight:600">Luciano O.</td><td>7</td><td style="color:#10b981;font-weight:600">6</td><td style="color:#f59e0b;font-weight:600">1</td><td style="font-size:11px;color:#94a3b8">Website Monitoring, EffectTS, Payload CMS, Responsividade, Google Ads events | <span style="color:#f59e0b">Konsigleads auth</span></td></tr>
+<tr><td style="font-weight:600">Luiz E.</td><td>4</td><td style="color:#10b981;font-weight:600">2</td><td style="color:#f59e0b;font-weight:600">2</td><td style="font-size:11px;color:#94a3b8">Followups CLT, Logo Mercantil | <span style="color:#f59e0b">Redesign Ajustes, SIAPE 2FA</span></td></tr>
+<tr><td style="font-weight:600">Daniel H.</td><td>3</td><td style="color:#10b981;font-weight:600">1</td><td style="color:#f59e0b;font-weight:600">2</td><td style="font-size:11px;color:#94a3b8">Ordenacao CLT cadastro | <span style="color:#f59e0b">Pendencia motivo, API validacao docs</span></td></tr>
+<tr style="background:#f8fafc;font-weight:700"><td>TOTAL</td><td>34</td><td style="color:#10b981">27</td><td style="color:#f59e0b">7</td><td></td></tr>
+</tbody>
+</table>
+<h3 style="font-size:16px;font-weight:700;color:#1e1b4b;margin:20px 0 12px">Itens Concluidos (26)</h3>
+<table>
+<thead><tr><th>Card</th><th>Dev</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>SIM - Implementar simulacao do Banco do Brasil - GOVSP</td><td>Guilherme</td><td style="color:#10b981">monitoring</td></tr>
+<tr><td>Enviar evento de receita para campanhas do Google Ads</td><td>Luciano</td><td style="color:#10b981">monitoring</td></tr>
+<tr><td>FIX - JSONMethodCodec.decodeEnvelope</td><td>Guilherme</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiApp] - Criar evento de visualizacao de banner</td><td>Guilherme</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiApp][DEV] - Erro FirebaseStorage</td><td>Guilherme</td><td style="color:#10b981">done</td></tr>
+<tr><td>Correcao da CI de versionamento do app</td><td>Guilherme</td><td style="color:#10b981">done</td></tr>
+<tr><td>Fix - CreationDate em UTC</td><td>Guilherme</td><td style="color:#10b981">em producao</td></tr>
+<tr><td>[KonsiApp] - Refatorar FilesUploadController</td><td>Ricardo</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiApp] - POC - PostHog</td><td>Ricardo + Luciano</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiApp] Fix Crashlytics fatal for network host lookup</td><td>Ricardo</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiApp] Fix crash in ContactForm when context is unmounted</td><td>Ricardo</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiApp] - Fix RecommendationCubit crash on emit after close</td><td>Ricardo</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiApp] - Fix SIAPE retry crash when appUser is null</td><td>Ricardo</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiApi] - Desligar envio de eventos para o mongo</td><td>Ricardo</td><td style="color:#10b981">done</td></tr>
+<tr><td>Ligar fluxo com senha GovRJ</td><td>Ricardo</td><td style="color:#10b981">done</td></tr>
+<tr><td>Ligar Convenio GovAM</td><td>Ricardo</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiApp] - Update versao do Flutter</td><td>Ricardo</td><td style="color:#10b981">em producao</td></tr>
+<tr><td>[KonsiApp] - Posthog - Fase 2</td><td>Ricardo</td><td style="color:#10b981">em producao</td></tr>
+<tr><td>APP - Atualizar versao do GoRouter</td><td>Ricardo</td><td style="color:#10b981">em producao</td></tr>
+<tr><td>[KonsiApp] - Alterar ordenacao do CLT na tela de cadastro</td><td>Daniel</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiApp] - Corrigir a logica do fluxo de followups CLT</td><td>Luiz</td><td style="color:#10b981">done</td></tr>
+<tr><td>[Konsi-app] Substituir logo banco master pelo logo do Mercantil</td><td>Luiz</td><td style="color:#10b981">done</td></tr>
+<tr><td>Website Monitoring</td><td>Luciano</td><td style="color:#10b981">done</td></tr>
+<tr><td>Adicione EffectTS para todo o blog Konsi</td><td>Luciano</td><td style="color:#10b981">done</td></tr>
+<tr><td>Upgrade Payload CMS 3.80 + Next.js 16</td><td>Luciano</td><td style="color:#10b981">done</td></tr>
+<tr><td>Ajusta responsividade de paginas do blog</td><td>Luciano</td><td style="color:#10b981">done</td></tr>
+</tbody>
+</table>
+<h3 style="font-size:16px;font-weight:700;color:#ef4444;margin:24px 0 12px">Transbordou para S19 (7 cards)</h3><p style="font-size:12px;color:#64748b;margin-bottom:10px">Itens planejados na S18 que nao foram concluidos e passaram para a Sprint 19.</p><table><thead><tr><th>Card</th><th>Dev</th><th>Status ao fechar S18</th></tr></thead><tbody><tr><td>Konsigleads - Corrigir autenticacao desligamento</td><td>Luciano</td><td style="color:#0f9d9f;font-weight:600">PR validada</td></tr><tr><td>[KonsiApi] - Pendencia motivo no App</td><td>Daniel</td><td style="color:#1090e0;font-weight:600">liberado testes</td></tr><tr><td>[KonsiApp] - Redesign tela de Ajustes</td><td>Luiz</td><td style="color:#1090e0;font-weight:600">liberado testes</td></tr><tr><td>[App&Api] - GOVSP acesso bloqueado</td><td>Ricardo</td><td style="color:#f59e0b;font-weight:600">PR em validacao</td></tr><tr><td>[KonsiApp] - IA validacao de documentos</td><td>Guilherme</td><td style="color:#f59e0b;font-weight:600">em andamento</td></tr><tr><td>[KonsiAPI] - Integracao API validacao docs</td><td>Daniel</td><td style="color:#f59e0b;font-weight:600">em andamento</td></tr><tr><td>[KonsiApp] - SIAPE 2FA + dispositivos autorizados</td><td>Luiz</td><td style="color:#f59e0b;font-weight:600">em ajustes</td></tr></tbody></table>
+<div class="callout" style="margin-top:12px"><strong>Resumo:</strong> 7 cards transbordaram — 3 em fase final (testes/PR validada), 4 em desenvolvimento ativo. Todos continuam na S19 com os mesmos assignees.</div>
+
+
+<div class="callout">
+<strong>Resultado S18:</strong> Sprint encerrada com <strong>26 cards entregues</strong> de 33 planejados (79%). 7 cards transbordaram para a S19 — 3 em fase final (testes/PR) e 4 em desenvolvimento ativo.
+</div>
+</div>
+
+
+
+</div>
+<div id="tab-s19" class="tab-content" style="max-width:960px;margin:0 auto;padding:0 24px">
+<div class="section" style="border:2px solid #6366f1">
+<h2><span class="num" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">!</span> Sprint 19 — Painel ao Vivo</h2>
+<p style="font-size:13px;color:#64748b;margin-bottom:16px">Sprint 19: 23/03 - 05/04/2026 | 44 cards planejados (+11 em observacao de anteriores) | 5 devs ativos | <strong style="color:#ef4444">Dados de 31/03/2026 18:04 — sprint em andamento</strong></p>
+<div style="background:linear-gradient(135deg,#eef2ff,#faf5ff);border-radius:10px;padding:16px;border:1px solid #c7d2fe;margin-bottom:20px">
+<div style="font-weight:700;font-size:14px;color:#4338ca;margin-bottom:8px">Objetivo da Sprint 19</div>
+<div style="font-size:13px;color:#312e81">1) Resolucao do Bug que esta afetando login dos usuarios<br>2) Passar a IA de validacao de documentos para Revisao de PR<br>3) Ajustar os dados de portal de Governo do Amazonas</div>
+</div>
+
+<div class="stats">
+<div class="stat"><div class="val" style="color:#10b981">10</div><div class="lbl">Concluidos</div><div class="sub">8 done + 1 em prod + 1 monitoring</div></div>
+<div class="stat"><div class="val" style="color:#6366f1">2</div><div class="lbl">Em aprovacao/testes</div><div class="sub">2 aprovado</div></div>
+<div class="stat"><div class="val" style="color:#f59e0b">19</div><div class="lbl">Em desenvolvimento</div><div class="sub">2 PR val + 6 p/ validar + 6 andamento + 5 ajustes</div></div>
+<div class="stat"><div class="val" style="color:#ef4444">13</div><div class="lbl">Ready to dev</div><div class="sub">aguardando inicio</div></div>
+<div class="stat"><div class="val" style="color:#94a3b8">44</div><div class="lbl">Total Planejado</div><div class="sub">10 entregues + 34 ativos</div></div>
+</div>
+<div class="chart-wrap" style="height:260px"><canvas id="chartS19Status"></canvas></div>
+<h3 style="font-size:16px;font-weight:700;color:#1e1b4b;margin:20px 0 12px">Analise de Risco (2 dias uteis restantes — exclui Sexta-feira Santa 03/04)</h3>
+<table>
+<thead><tr><th>Risco</th><th>Qtd</th><th>Status</th><th>Expectativa</th></tr></thead>
+<tbody>
+<tr><td style="color:#10b981;font-weight:700">Entregue</td><td>10</td><td>Done (8) + Em producao (1) + Monitoring (1)</td><td>100%</td></tr>
+<tr><td style="color:#6366f1;font-weight:700">Baixo risco</td><td>2</td><td>Aprovado (2)</td><td>~95%</td></tr>
+<tr><td style="color:#f59e0b;font-weight:700">Medio risco</td><td>19</td><td>Em andamento (6) + Em ajustes (5) + PR em validacao (2) + P/ validar PR (6)</td><td>~70%</td></tr>
+<tr><td style="color:#ef4444;font-weight:700">Alto risco</td><td>13</td><td>Ready to dev (10 sem assignee)</td><td>~40%</td></tr>
+</tbody>
+</table>
+<div class="chart-wrap" style="height:260px"><canvas id="chartS19Risk"></canvas></div>
+<h3 style="font-size:16px;font-weight:700;color:#1e1b4b;margin:20px 0 12px">Cards por Dev na Sprint 19</h3>
+<table>
+<thead><tr><th>Dev</th><th>Cards</th><th>Concluidos</th><th>Em andamento</th><th>Destaques</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:600">Luiz E.</td><td>9</td><td style="color:#10b981;font-weight:600">1</td><td>8</td><td style="font-size:11px;color:#64748b"><span style="color:#10b981">SIAPE Jornada ✓ (monitoring)</span>, PIX App refactor (pr em validacao), KonsiApi Redesign (p/ validar PR), Siape 2FA (p/ validar PR), <span style="color:#f59e0b">PIX API (em andamento ⬇ de PR validada)</span>, IA UI Websocket (em andamento), Tela autorizacao (ajustes), 2FA SIAPE (ajustes), Redesign Ajustes (ajustes)</td></tr>
+<tr><td style="font-weight:600">Ricardo C.</td><td>9</td><td style="color:#10b981;font-weight:600">2</td><td>7</td><td style="font-size:11px;color:#64748b"><span style="color:#10b981">Posthog Fase 3 ✓ (done), deletar Mongo ✓ (done ⬆)</span>, <span style="color:#6366f1">Crash JSON decode (aprovado), Guard null check (aprovado)</span>, Crash GoRouter.of null (p/ validar PR), konsi-api PR, konsi-app PR, GOVSP bloqueado (ready), CI events-api (ready)</td></tr>
+<tr><td style="font-weight:600">Guilherme E.</td><td>7</td><td style="color:#10b981;font-weight:600">3</td><td>4</td><td style="font-size:11px;color:#64748b"><span style="color:#10b981">Desligar GovRJ ✓, Corrigir campo UTC ✓, Report erros API ✓</span>, <span style="color:#f59e0b">Geracao lead GovRJ (em andamento ⬆ novo)</span>, IA validacao documentos (pr em validacao), Melhorias CLAUDE.md (em andamento), Certificado Apple (ready)</td></tr>
+<tr><td style="font-weight:600">Daniel H.</td><td>5</td><td style="color:#10b981;font-weight:600">4</td><td>1</td><td style="font-size:11px;color:#64748b"><span style="color:#10b981">Repo Api ✓, Repo App ✓, Login bug ✓, API validacao docs ✓ (em producao)</span>, GovAM cadeado (dev)</td></tr>
+<tr><td style="font-weight:600">Luciano O.</td><td>2</td><td>0</td><td>2</td><td style="font-size:11px;color:#64748b"><span style="color:#f59e0b">Konsigleads auth desligamento (p/ validar PR ⬇ de PR validada)</span>, FB Ads eventos (em andamento ⬆)</td></tr>
+<tr><td style="font-weight:600;color:#ef4444">Sem assignee</td><td>12</td><td>0</td><td>12</td><td style="font-size:11px;color:#ef4444">Alteracoes no app x2 (ajustes), Refactor dados bancarios (ready), Token GovRJ (ready), Botoes das telas x2 (ready), Dados bancarios padrao incorreto x2 (ready), Alterar CEP x2 (ready), Alterar email x2 (ready)</td></tr>
+</tbody>
+</table>
+<h3 style="font-size:16px;font-weight:700;color:#94a3b8;margin:20px 0 12px">Observacao — Entregas Anteriores (11 cards — nao contam na S19)</h3>
+<p style="font-size:12px;color:#94a3b8;margin-bottom:8px">Itens de sprints anteriores mantidos aqui apenas para acompanhamento pos-entrega. Nao contam no Total Planejado nem nos Concluidos da S19.</p>
+<table><thead><tr><th>Card</th><th>Dev</th><th>Status</th><th>Observacao</th></tr></thead><tbody><tr style="background:#f0fdf4"><td>Alteracao no Simulador</td><td>Guilherme</td><td style="color:#10b981;font-weight:700">done ✓</td><td style="font-size:11px;color:#10b981">concluido — pode sair do monitoring</td></tr><tr style="background:#f0fdf4"><td>Alteracao ConsigleadsAPI</td><td>Guilherme</td><td style="color:#10b981;font-weight:700">done ✓</td><td style="font-size:11px;color:#10b981">concluido — pode sair do monitoring</td></tr><tr style="background:#f0fdf4"><td>SIM - Implementar simulacao BB GOVSP</td><td>Guilherme</td><td style="color:#10b981;font-weight:700">done ✓</td><td style="font-size:11px;color:#10b981">concluido — pode sair do monitoring</td></tr><tr style="background:#f0fdf4"><td>Enviar evento de receita para campanhas do Google Ads</td><td>Luciano</td><td style="color:#10b981;font-weight:700">done ✓</td><td style="font-size:11px;color:#10b981">concluido — pode sair do monitoring</td></tr><tr style="background:#f0fdf4"><td>[KonsiApi] - Detalhe operacional no motivo de pendencia</td><td>Daniel</td><td style="color:#10b981;font-weight:700">done ✓</td><td style="font-size:11px;color:#10b981">concluido — pode sair do monitoring</td></tr><tr style="background:#f0fdf4"><td>Criar script para reajustar timestamp deste mes</td><td>Guilherme</td><td style="color:#10b981;font-weight:700">done ✓</td><td style="font-size:11px;color:#10b981">concluido — pode sair do monitoring</td></tr><tr style="background:#f0fdf4"><td>Fix - CreationDate em UTC</td><td>Guilherme</td><td style="color:#10b981;font-weight:700">done ✓</td><td style="font-size:11px;color:#10b981">concluido — pode sair do monitoring</td></tr><tr><td>[KonsiApp] - Update versao do Flutter</td><td>Ricardo</td><td style="color:#10b981">monitoring</td><td style="font-size:11px;color:#94a3b8">observando</td></tr><tr style="background:#f0fdf4"><td>[KonsiApp] - Posthog - Fase 2</td><td>Ricardo</td><td style="color:#10b981;font-weight:700">done ✓</td><td style="font-size:11px;color:#10b981">concluido — pode sair do monitoring</td></tr><tr style="background:#f0fdf4"><td>Criar chaves do firebase</td><td>Ricardo</td><td style="color:#10b981;font-weight:700">done ✓</td><td style="font-size:11px;color:#10b981">concluido — pode sair do monitoring</td></tr><tr><td>APP - Atualizar versao do GoRouter</td><td>Ricardo</td><td style="color:#10b981">monitoring</td><td style="font-size:11px;color:#94a3b8">observando</td></tr></tbody></table><h3 style="font-size:16px;font-weight:700;color:#10b981;margin:20px 0 12px">Concluidos S19 (10)</h3>
+<table>
+<thead><tr><th>Card</th><th>Dev</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Desligar convenio GovRJ</td><td>Guilherme</td><td style="color:#10b981">done</td></tr>
+<tr><td>Incrementar report de erros de request na API</td><td>Guilherme</td><td style="color:#10b981">done</td></tr>
+<tr><td>Corrigir campo em UTC no user</td><td>Guilherme</td><td style="color:#10b981">done</td></tr>
+<tr><td>Alteracao no repositorio da Api</td><td>Daniel</td><td style="color:#10b981">done</td></tr>
+<tr><td>Alteracao no repositorio do App</td><td>Daniel</td><td style="color:#10b981">done</td></tr>
+<tr><td>Usuarios com Cadastro nao conseguindo fazer Login</td><td>Daniel</td><td style="color:#10b981">done</td></tr>
+<tr><td>[KonsiAPI] - Implementar integracao com API de validacao de documentos</td><td>Daniel</td><td style="color:#10b981">em producao</td></tr>
+<tr><td>[KonsiApp] - Posthog - Fase 3</td><td>Ricardo</td><td style="color:#10b981">done (⬆ de monitoring)</td></tr>
+<tr style="background:#f0fdf4"><td>deletar collection events do mongo</td><td>Ricardo</td><td style="color:#10b981">done (⬆ de em andamento)</td></tr>
+<tr><td>[KonsiApp] - SIAPE - Jornada dispositivos autorizados e 2FA</td><td>Luiz</td><td style="color:#10b981">monitoring</td></tr>
+</tbody>
+</table>
+<h3 style="font-size:16px;font-weight:700;color:#6366f1;margin:20px 0 12px">Em Aprovacao / Testes (2)</h3>
+<table>
+<thead><tr><th>Card</th><th>Dev</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>[Jarvis] Crash por null JSON decode em getAuthenticationTypes</td><td>Ricardo</td><td style="color:#6366f1">aprovado</td></tr>
+<tr><td>[Jarvis] Guard null check on hasOpportunity in DashboardBloc</td><td>Ricardo</td><td style="color:#6366f1">aprovado</td></tr>
+</tbody>
+</table>
+<h3 style="font-size:16px;font-weight:700;color:#f59e0b;margin:20px 0 12px">Em Desenvolvimento (19)</h3>
+<table>
+<thead><tr><th>Card</th><th>Dev</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>[KonsiApp] - Implementar a IA de validacao de documentos</td><td>Guilherme</td><td style="color:#6366f1">pr em validacao</td></tr>
+<tr><td>APP - Refactor da tela de Dados Bancarios para inserir campo de PIX</td><td>Luiz</td><td style="color:#6366f1">pr em validacao</td></tr>
+<tr><td>[Jarvis] Crash GoRouter.of null check na tela de login</td><td>Ricardo</td><td style="color:#f59e0b">p/ validar PR</td></tr>
+<tr><td>konsi-api</td><td>Ricardo</td><td style="color:#f59e0b">p/ validar PR</td></tr>
+<tr><td>Konsi-app</td><td>Ricardo</td><td style="color:#f59e0b">p/ validar PR</td></tr>
+<tr><td>[KonsiApi] Adicionar Siape na lista de validacao de 2FA</td><td>Luiz</td><td style="color:#f59e0b">p/ validar PR</td></tr>
+<tr style="background:#f0fdf4"><td>[KonsiApi] - Redesign da tela de Ajustes</td><td>Luiz</td><td style="color:#f59e0b">p/ validar PR (⬆ de em andamento)</td></tr>
+<tr style="background:#f0fdf4"><td>Corrigir autenticacao no fluxo de desligamento Konsigleads</td><td>Luciano</td><td style="color:#f59e0b">p/ validar PR (⬇ de PR validada)</td></tr>
+<tr><td>Melhorias no CLAUDE.md para revisao de codigo do APP</td><td>Guilherme</td><td style="color:#f59e0b">em andamento</td></tr>
+<tr style="background:#f0fdf4"><td>Geracao de lead GovRJ (com e sem senha) nao funciona</td><td>Guilherme</td><td style="color:#f59e0b">em andamento (⬆ novo)</td></tr>
+<tr style="background:#f0fdf4"><td>API - Aceitar campo de pix no dados bancarios</td><td>Luiz</td><td style="color:#f59e0b">em andamento (⬇ de PR validada)</td></tr>
+<tr><td>Gov AM - Cadeado nos campos de portabilidade + ConsigFacil</td><td>Daniel</td><td style="color:#f59e0b">em andamento</td></tr>
+<tr><td>APP - UI e Conexao com Websocket da IA de validacao</td><td>Luiz</td><td style="color:#f59e0b">em andamento</td></tr>
+<tr style="background:#f0fdf4"><td>API - Implementacao dos eventos de receita do Facebook Ads</td><td>Luciano</td><td style="color:#f59e0b">em andamento (⬆ de ready)</td></tr>
+<tr><td>[KonsiApp] - Redesign da tela de Ajustes</td><td>Luiz</td><td style="color:#f59e0b">em ajustes</td></tr>
+<tr><td>Criacao da tela de autorizacao de dispositivo</td><td>Luiz</td><td style="color:#f59e0b">em ajustes</td></tr>
+<tr><td>Adaptacao da tela de 2FA ativo para SIAPE</td><td>Luiz</td><td style="color:#f59e0b">em ajustes</td></tr>
+<tr><td>Alteracoes no app (AC-747)</td><td style="color:#ef4444">sem assignee</td><td style="color:#f59e0b">em ajustes</td></tr>
+<tr><td>Alteracoes no app (AC-1157)</td><td style="color:#ef4444">sem assignee</td><td style="color:#f59e0b">em ajustes</td></tr>
+</tbody>
+</table>
+<h3 style="font-size:16px;font-weight:700;color:#ef4444;margin:20px 0 12px">Ready to Dev (13)</h3>
+<table>
+<thead><tr><th>Card</th><th>Assignee</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Gerar novo certificado de destribuicao para Apple</td><td>Guilherme</td><td>ready to dev</td></tr>
+<tr><td>Configurar a CI do Konsi-events-api</td><td>Ricardo</td><td>ready to dev</td></tr>
+<tr><td>[App&Api] - Nosso acesso esta bloqueado, convenio:GOVSP</td><td>Ricardo</td><td>ready to dev</td></tr>
+<tr><td>APP - Inserir Etapa de inclusao de Token em GovRJ</td><td style="color:#ef4444">sem assignee</td><td>ready to dev</td></tr>
+<tr><td>Realizar refactor da tela de dados bancarios dentro do Ajustes</td><td style="color:#ef4444">sem assignee</td><td>ready to dev</td></tr>
+<tr><td>Botoes das telas nao estao levando em consideracao tela do Celular (AC-1150)</td><td style="color:#ef4444">sem assignee</td><td>ready to dev</td></tr>
+<tr><td>Botoes das telas nao estao levando em consideracao tela do Celular (AC-1161)</td><td style="color:#ef4444">sem assignee</td><td>ready to dev (duplicata)</td></tr>
+<tr><td>Tela de Dados bancarios com padrao incorreto (AC-1149)</td><td style="color:#ef4444">sem assignee</td><td>ready to dev</td></tr>
+<tr><td>Tela de Dados bancarios com padrao incorreto (AC-1160)</td><td style="color:#ef4444">sem assignee</td><td>ready to dev (duplicata)</td></tr>
+<tr><td>Alterar CEP nao esta alterando na tela de dados cadastrais (AC-1148)</td><td style="color:#ef4444">sem assignee</td><td>ready to dev</td></tr>
+<tr><td>Alterar CEP nao esta alterando na tela de dados cadastrais (AC-1159)</td><td style="color:#ef4444">sem assignee</td><td>ready to dev (duplicata)</td></tr>
+<tr><td>Alterar email nao esta mandando alterar senha (AC-1147)</td><td style="color:#ef4444">sem assignee</td><td>ready to dev</td></tr>
+<tr><td>Alterar email nao esta mandando alterar senha (AC-1158)</td><td style="color:#ef4444">sem assignee</td><td>ready to dev (duplicata)</td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<strong>Expectativa Sprint 19:</strong> Sprint no 9o dia de 10 com 44 cards planejados (apenas S19 — anteriores nao contam). 10 entregues (8 done + 1 em producao + 1 monitoring) + 2 em fase final (2 aprovado). 19 cards em desenvolvimento ativo (2 PR validacao + 6 p/ validar PR + 6 em andamento + 5 em ajustes). 13 cards ready to dev. <strong style="color:#10b981">AC-1163 (geracao lead GovRJ) adicionado em andamento — novo card na sprint.</strong> <strong style="color:#f59e0b">ATENCAO: AC-1088 (Konsigleads auth) e AC-1144 (PIX API) retornaram de PR validada para p/ validar PR e em andamento respectivamente — possivel rejeicao de PR. 4 cards duplicados (AC-1158-1161 copias de AC-1147-1150). 10 cards sem assignee pendentes.</strong> Com 2 dias uteis restantes (excluindo Sexta-feira Santa 03/04), projecao: <strong>25-29 cards</strong> dos 44 planejados (10 + 1.9 + 13.3 + 5.2 ± 2).
+</div>
+</div>
+</div>
+
+<div class="footer">Squad AppCore · Dados extraídos do ClickUp · Gerado em 31/03/2026 18:04</div>
+</div>
+
+<script>
+const sprints = ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12','S13','S14','S15','S16','S17','S18','S19'];
+const cards = [17,5,5,12,12,6,5,13,18,14,10,13,14,21,19,11,12,26,10];
+const scores = [9,16,9,9,12,4,6,9,16,16,16,20,16,25,20,16,20,25,25];
+const cpd = [2.8,1.3,1.7,3.0,2.4,3.0,1.7,4.3,6.0,3.5,2.0,2.2,3.5,5.3,4.8,5.5,3.0,5.2,1.2];
+const periods = ['23/06-06/07','07/07-20/07','28/07-10/08','11/08-24/08','25/08-07/09','08/09-21/09','22/09-05/10','06/10-19/10','20/10-02/11','03/11-16/11','17/11-30/11','01/12-14/12','15/12-04/01','05/01-18/01','19/01-01/02','02/02-22/02','23/02-08/03','09/03-22/03','23/03-05/04'];
+const devs = [6,4,3,4,5,2,3,3,3,4,5,6,4,4,4,2,4,5,5];
+const impact = [3,4,3,3,3,2,2,3,4,4,4,5,4,5,5,4,5,5,5];
+
+// Overview chart
+new Chart(document.getElementById('chartOverview'),{type:'line',data:{labels:sprints,datasets:[{label:'Cards',data:cards,borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,.1)',fill:true,tension:.3},{label:'Score',data:scores,borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.08)',fill:true,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true}}}});
+
+// Cards chart
+new Chart(document.getElementById('chartCards'),{type:'bar',data:{labels:sprints,datasets:[{label:'Cards',data:cards,backgroundColor:'#6366f1',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+
+// Score chart
+new Chart(document.getElementById('chartScore'),{type:'bar',data:{labels:sprints,datasets:[{label:'Score',data:scores,backgroundColor:scores.map(s=>s>=20?'#10b981':s>=16?'#f59e0b':'#cbd5e1'),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+
+// Team chart
+new Chart(document.getElementById('chartTeam'),{type:'bar',data:{labels:['Guilherme','Ricardo','Daniel','Luciano','Luiz'],datasets:[{label:'Jul-Ago/25 (S1-S7)',data:[21,0,9,0,0],backgroundColor:'rgba(148,163,184,0.7)',borderRadius:4},{label:'Set/25-Mar/26 (S8-S18)',data:[89,36,22,22,4],backgroundColor:'rgba(99,102,241,0.85)',borderRadius:4,datalabels:{display:true,anchor:'end',align:'start',font:{size:11,weight:'bold'},color:'#fff',formatter:function(v,ctx){return ['+170%','novo','+56%','novo','novo'][ctx.dataIndex]}}}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:true,position:'top'}},scales:{x:{stacked:false,beginAtZero:true}}}});
+
+// Complexity total chart
+new Chart(document.getElementById("chartComplexity"),{type:"bar",data:{labels:["Guilherme","Ricardo","Daniel","Luciano","Luiz"],datasets:[{label:"Jul-Ago/25 (S1-S7)",data:[340,0,155,0,0],backgroundColor:"rgba(148,163,184,0.7)",borderRadius:4},{label:"Set/25-Mar/26 (S8-S18)",data:[1442,699,419,470,100],backgroundColor:"rgba(245,158,11,0.85)",borderRadius:4,datalabels:{display:true,anchor:"end",align:"start",font:{size:11,weight:"bold"},color:"#fff",formatter:function(v,ctx){return ["+170%","novo","+72%","novo","novo"][ctx.dataIndex]}}}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:"y",plugins:{legend:{display:true,position:"top"}},scales:{x:{stacked:false,beginAtZero:true}}}});
+
+// Density chart (avg complexity per card)
+new Chart(document.getElementById("chartDensity"),{type:"bar",data:{labels:["Guilherme","Ricardo","Daniel","Luciano","Luiz"],datasets:[{label:"Jul-Ago/25 (S1-S7)",data:[16.2,0,17.2,0,0],backgroundColor:"rgba(148,163,184,0.7)",borderRadius:4},{label:"Set/25-Mar/26 (S8-S18)",data:[16.6,21.2,19.0,22.4,25.0],backgroundColor:"rgba(16,185,129,0.85)",borderRadius:4,datalabels:{display:true,anchor:"end",align:"start",font:{size:11,weight:"bold"},color:"#fff",formatter:function(v,ctx){return ["+2%","novo","+10%","novo","novo"][ctx.dataIndex]}}}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:"y",plugins:{legend:{display:true,position:"top"}},scales:{x:{stacked:false,beginAtZero:true}}}});
+// Capacity chart
+new Chart(document.getElementById('chartCapacity'),{type:'bar',data:{labels:['Atual+IA','+1 hire','+2 hires ⭐','+3 hires'],datasets:[{label:'Sprints que absorve (Q2-Q4)',data:[20,25,30,35],backgroundColor:["rgba(148,163,184,0.7)","rgba(99,102,241,0.7)","rgba(16,185,129,0.85)","rgba(139,92,246,0.7)"],borderRadius:6,order:2},{label:"Demanda total (~40 sprints)",data:[40,40,40,40],borderColor:"#ef4444",borderWidth:2,borderDash:[6,4],type:"line",pointRadius:0,fill:false,order:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+
+new Chart(document.getElementById('chartS18Status'),{type:'doughnut',data:{labels:['Concluidos (26)','Em aprovacao/testes (3)','Em desenvolvimento (4)'],datasets:[{data:[26,3,4],backgroundColor:['#10b981','#6366f1','#f59e0b'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}});
+
+new Chart(document.getElementById('chartS18Risk'),{type:'bar',data:{labels:['Entregue','Em aprovacao/testes','Em desenvolvimento'],datasets:[{label:'Cards',data:[26,3,4],backgroundColor:['#10b981','#6366f1','#f59e0b'],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true}}}});
+
+// Sprint table
+const tb=document.getElementById('sprintTable');
+sprints.forEach((s,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td class="highlight">${s}${s==="S19"?" 🔄":""}</td><td style="color:#64748b">${periods[i]}</td><td style="font-weight:700">${s==="S19"?"10/44 🔄":cards[i]}</td><td>${devs[i]}</td><td style="font-weight:600;color:${cpd[i]>=4?'#10b981':'#64748b'}">${cpd[i]}</td><td>${impact[i]}</td><td style="font-weight:700;color:${scores[i]>=20?'#10b981':scores[i]>=16?'#f59e0b':'#94a3b8'}">${scores[i]}</td>`;tb.appendChild(tr)});
+
+// Roadmap
+const roadmap=[{j:'Aquisição',items:['Auth sem fricção','Recuperação cadastros','Onboarding por público','Login social'],c:'#6366f1'},{j:'Descoberta',items:['Personalização','Agente in-app','Monitor oportunidades','Oferta por benefício'],c:'#f59e0b'},{j:'Simulação',items:['Ranking destaque','Oferta personalizada','Comparador','Ranking ML'],c:'#10b981'},{j:'Contratação',items:['Funil otimizado','Retomada fluxo','Formalização in-app','Tracking status','Push proativo'],c:'#ef4444'},{j:'Pendências',items:['Central pendências','Resolução guiada','SLA visível','Notificação in-app','Omnichannel'],c:'#8b5cf6'},{j:'Fundacional',items:['Auth multicanal','Design System','Testes integrados','Auth serviços','Buffer bugs'],c:'#f59e0b'}];
+const rg=document.getElementById('roadmapGrid');
+roadmap.forEach(r=>{const d=document.createElement('div');d.className='roadmap-card';d.innerHTML=`<h3><span class="dot" style="background:${r.c}"></span>${r.j}</h3>${r.items.map(i=>`<div class="item">${i}</div>`).join('')}`;rg.appendChild(d)});
+
+// Pipeline capacity chart
+new Chart(document.getElementById('chartPipeline'),{type:'bar',data:{labels:['Backlog Pronto','Pendentes (est.)','Despriorizadas','TOTAL Pipeline'],datasets:[{label:'Sprints necessários',data:[6.5,3,3,12.5],backgroundColor:['#10b981','#f59e0b','#94a3b8','#ef4444'],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},annotation:{annotations:{line1:{type:'line',yMin:10,yMax:10,borderColor:'#6366f1',borderWidth:2,borderDash:[6,6],label:{display:true,content:'Capacidade Q2-Q4 (time atual+IA)',position:'end'}}}}},scales:{y:{beginAtZero:true,title:{display:true,text:'Sprints de trabalho'}}}}});
+
+
+function switchTab(id){
+  document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active')});
+  document.querySelectorAll('.tab-btn').forEach(function(e){e.classList.remove('active')});
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// S19 Status Donut
+new Chart(document.getElementById("chartS19Status"),{type:"doughnut",data:{labels:["Concluidos (10)","Em aprovacao (2)","Em desenvolvimento (19)","Ready to dev (13)"],datasets:[{data:[10,2,19,13],backgroundColor:["#10b981","#6366f1","#f59e0b","#ef4444"],borderWidth:2,borderColor:"#fff"}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right"}}}});
+
+// S19 Risk projection
+new Chart(document.getElementById("chartS19Risk"),{type:"bar",data:{labels:["Entregue","Baixo risco","Medio risco","Alto risco"],datasets:[{label:"Cards",data:[10,2,19,13],backgroundColor:["#10b981","#6366f1","#f59e0b","#ef4444"],borderRadius:6},{label:"Expectativa",data:[10,1.9,13.3,5.2],backgroundColor:["rgba(16,185,129,0.3)","rgba(99,102,241,0.3)","rgba(245,158,11,0.3)","rgba(239,68,68,0.3)"],borderColor:["#10b981","#6366f1","#f59e0b","#ef4444"],borderWidth:2,borderDash:[4,4],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:"top"}},scales:{y:{beginAtZero:true}}}});
+
+</script>
+</body>
+</html>
