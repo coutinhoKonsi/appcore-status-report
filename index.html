@@ -149,7 +149,7 @@ tr:hover td{background:#fafafa}
 
   <div class="section">
     <h2><span class="num">6</span> Sprint Scorecard</h2>
-    <p style="font-size:12px;color:#64748b;margin-bottom:4px">S18 fechada em 22/03 com 26 cards entregues (de 33 planejados). 7 cards transbordaram para S19.</p>    <p style="font-size:12px;color:#f59e0b;margin-bottom:8px">* S19 em andamento — 34 cards planejados (+6 em observacao de sprints anteriores). 20 entregues (14 done + 5 em producao + 1 monitoring). 1 card em aprovacao (pr validada). 10 em desenvolvimento (4 PR em validacao + 4 p/ validar PR + 2 em andamento). 3 ready to dev. Ultimo dia util (Sexta-feira Santa 03/04 e fim de semana). Projecao: 23-27 cards. Dados ao vivo na aba Sprint 19.</p>
+    <p style="font-size:12px;color:#64748b;margin-bottom:4px">S18 fechada em 22/03 com 26 cards entregues (de 33 planejados). 7 cards transbordaram para S19.</p>    <p style="font-size:12px;color:#f59e0b;margin-bottom:8px">* S19 em andamento — 34 cards planejados (+6 em observacao de sprints anteriores). 20 entregues (14 done + 5 em producao + 1 monitoring). 2 cards em aprovacao (1 pr validada + 1 liberado testes). 9 em desenvolvimento (5 PR em validacao + 2 p/ validar PR + 2 em andamento). 3 ready to dev. Ultimo dia util (Sexta-feira Santa 03/04 e fim de semana). Projecao: 23-27 cards. Dados ao vivo na aba Sprint 19.</p>
     <table>
       <thead><tr><th>Sprint</th><th>Período</th><th>Cards</th><th>Devs</th><th>Cards/Dev</th><th>Impacto</th><th>Score</th></tr></thead>
       <tbody id="sprintTable"></tbody>
@@ -327,7 +327,7 @@ tr:hover td{background:#fafafa}
 <div id="tab-s19" class="tab-content" style="max-width:960px;margin:0 auto;padding:0 24px">
 <div class="section" style="border:2px solid #6366f1">
 <h2><span class="num" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">!</span> Sprint 19 — Painel ao Vivo</h2>
-<p style="font-size:13px;color:#64748b;margin-bottom:16px">Sprint 19: 23/03 - 05/04/2026 | 34 cards planejados (+6 em observação de anteriores) | 5 devs ativos | <strong style="color:#ef4444">Dados de 02/04/2026 14:47 — sprint em andamento</strong></p>
+<p style="font-size:13px;color:#64748b;margin-bottom:16px">Sprint 19: 23/03 - 05/04/2026 | 34 cards planejados (+6 em observação de anteriores) | 5 devs ativos | <strong style="color:#ef4444">Dados de 02/04/2026 18:04 — sprint em andamento</strong></p>
 <div style="background:linear-gradient(135deg,#eef2ff,#faf5ff);border-radius:10px;padding:16px;border:1px solid #c7d2fe;margin-bottom:20px">
 <div style="font-weight:700;font-size:14px;color:#4338ca;margin-bottom:8px">Objetivo da Sprint 19</div>
 <div style="font-size:13px;color:#312e81">1) Resolucao do Bug que esta afetando login dos usuarios<br>2) Passar a IA de validacao de documentos para Revisao de PR<br>3) Ajustar os dados de portal de Governo do Amazonas</div>
@@ -335,20 +335,20 @@ tr:hover td{background:#fafafa}
 
 <div class="stats">
 <div class="stat"><div class="val" style="color:#10b981">20</div><div class="lbl">Concluidos</div><div class="sub">14 done + 5 em prod + 1 monitoring</div></div>
-<div class="stat"><div class="val" style="color:#6366f1">1</div><div class="lbl">Em aprovacao/testes</div><div class="sub">1 pr validada</div></div>
-<div class="stat"><div class="val" style="color:#f59e0b">10</div><div class="lbl">Em desenvolvimento</div><div class="sub">4 PR val + 4 p/ validar + 2 andamento</div></div>
+<div class="stat"><div class="val" style="color:#6366f1">2</div><div class="lbl">Em aprovacao/testes</div><div class="sub">1 pr validada + 1 liberado testes</div></div>
+<div class="stat"><div class="val" style="color:#f59e0b">9</div><div class="lbl">Em desenvolvimento</div><div class="sub">5 PR val + 2 p/ validar + 2 andamento</div></div>
 <div class="stat"><div class="val" style="color:#ef4444">3</div><div class="lbl">Ready to dev</div><div class="sub">aguardando inicio</div></div>
 <div class="stat"><div class="val" style="color:#94a3b8">34</div><div class="lbl">Total Planejado</div><div class="sub">20 entregues + 14 ativos</div></div>
 
 </div>
 <div class="chart-wrap" style="height:260px"><canvas id="chartS19Status"></canvas></div>
-<h3 style="font-size:16px;font-weight:700;color:#1e1b4b;margin:20px 0 12px">Analise de Risco (ultimo dia util — Sexta-feira Santa 03/04 é feriado + fim de semana)</h3>
+<h3 style="font-size:16px;font-weight:700;color:#1e1b4b;margin:20px 0 12px">Analise de Risco (hoje é o ultimo dia util — Sexta-feira Santa 03/04 é feriado + fim de semana)</h3>
 <table>
 <thead><tr><th>Risco</th><th>Qtd</th><th>Status</th><th>Expectativa</th></tr></thead>
 <tbody>
 <tr><td style="color:#10b981;font-weight:700">Entregue</td><td>20</td><td>Done (14) + Em produção (5) + Monitoring (1)</td><td>100%</td></tr>
-<tr><td style="color:#6366f1;font-weight:700">Baixo risco</td><td>1</td><td>PR validada (1)</td><td>~85%</td></tr>
-<tr><td style="color:#f59e0b;font-weight:700">Medio risco</td><td>10</td><td>PR em validação (4) + P/ validar PR (4) + Em andamento (2)</td><td>~40%</td></tr>
+<tr><td style="color:#6366f1;font-weight:700">Baixo risco</td><td>2</td><td>PR validada (1) + Liberado testes (1)</td><td>~85%</td></tr>
+<tr><td style="color:#f59e0b;font-weight:700">Medio risco</td><td>9</td><td>PR em validação (5) + P/ validar PR (2) + Em andamento (2)</td><td>~40%</td></tr>
 <tr><td style="color:#ef4444;font-weight:700">Alto risco</td><td>3</td><td>Ready to dev (3)</td><td>~10%</td></tr>
 </tbody>
 </table>
@@ -358,9 +358,9 @@ tr:hover td{background:#fafafa}
 <thead><tr><th>Dev</th><th>Cards</th><th>Concluidos</th><th>Em andamento</th><th>Destaques</th></tr></thead>
 <tbody>
 <tr><td style="font-weight:600">Ricardo C.</td><td>10</td><td style="color:#10b981;font-weight:600">9</td><td>1</td><td style="font-size:11px;color:#64748b"><span style="color:#10b981">Posthog F3 ✓, deletar Mongo ✓, chaves Firebase ✓, 4× Jarvis crashes ✓ (em prod), Posthog F4 ✓ (em prod), CI events-api ✓ (monitoring)</span>, GOVSP bloqueado (ready)</td></tr>
-<tr><td style="font-weight:600">Guilherme E.</td><td>8</td><td style="color:#10b981;font-weight:600">5</td><td>3</td><td style="font-size:11px;color:#64748b"><span style="color:#10b981">Desligar GovRJ ✓, report erros ✓, campo UTC ✓, script timestamp ✓, CLAUDE.md ✓</span>, IA docs (pr validação), lead GovRJ (andamento), Certif Apple (ready)</td></tr>
+<tr><td style="font-weight:600">Guilherme E.</td><td>8</td><td style="color:#10b981;font-weight:600">5</td><td>3</td><td style="font-size:11px;color:#64748b"><span style="color:#10b981">Desligar GovRJ ✓, report erros ✓, campo UTC ✓, script timestamp ✓, CLAUDE.md ✓</span>, IA docs (liberado testes), lead GovRJ (andamento), Certif Apple (ready)</td></tr>
 <tr><td style="font-weight:600">Daniel H.</td><td>7</td><td style="color:#10b981;font-weight:600">4</td><td>3</td><td style="font-size:11px;color:#64748b"><span style="color:#10b981">Login bug ✓, API validação docs ✓ (em prod), Alteração repo Api ✓, Alteração repo App ✓</span>, Gov AM (pr validada), GovAM cadeado (pr validação), Token GovRJ (andamento)</td></tr>
-<tr><td style="font-weight:600">Luiz E.</td><td>7</td><td style="color:#10b981;font-weight:600">2</td><td>5</td><td style="font-size:11px;color:#64748b"><span style="color:#10b981">SIAPE Jornada ✓, Siape validação 2FA ✓</span>, PIX refactor + PIX API (pr validação), Redesign AC-689 + KonsiApi Redesign (p/ validar PR), IA UI Websocket (ready)</td></tr>
+<tr><td style="font-weight:600">Luiz E.</td><td>7</td><td style="color:#10b981;font-weight:600">2</td><td>5</td><td style="font-size:11px;color:#64748b"><span style="color:#10b981">SIAPE Jornada ✓, Siape validação 2FA ✓</span>, PIX refactor + PIX API + Redesign AC-689 + KonsiApi Redesign (pr validação), IA UI Websocket (ready)</td></tr>
 <tr><td style="font-weight:600">Luciano O.</td><td>2</td><td>0</td><td>2</td><td style="font-size:11px;color:#64748b">Auth Konsigleads (p/ validar PR), FB Ads eventos (p/ validar PR)</td></tr>
 </tbody>
 </table>
@@ -392,23 +392,23 @@ tr:hover td{background:#fafafa}
 <tr><td>[KonsiApi] Adicionar Siape na lista de validacao de 2FA</td><td>Luiz</td><td style="color:#10b981">done</td></tr>
 </tbody>
 </table>
-<h3 style="font-size:16px;font-weight:700;color:#6366f1;margin:20px 0 12px">Em Aprovacao / Testes (1)</h3>
+<h3 style="font-size:16px;font-weight:700;color:#6366f1;margin:20px 0 12px">Em Aprovacao / Testes (2)</h3>
 <table>
 <thead><tr><th>Card</th><th>Dev</th><th>Status</th></tr></thead>
 <tbody>
 <tr><td>KonsiApi ajustes para Gov AM</td><td>Daniel</td><td style="color:#0f9d9f">pr validada</td></tr>
+<tr><td>[API] Implementar a IA de validacao de documentos</td><td>Guilherme</td><td style="color:#1090e0">liberado testes</td></tr>
 </tbody>
 </table>
-<h3 style="font-size:16px;font-weight:700;color:#f59e0b;margin:20px 0 12px">Em Desenvolvimento (10)</h3>
+<h3 style="font-size:16px;font-weight:700;color:#f59e0b;margin:20px 0 12px">Em Desenvolvimento (9)</h3>
 <table>
 <thead><tr><th>Card</th><th>Dev</th><th>Status</th></tr></thead>
 <tbody>
-<tr><td>[KonsiApp] - Implementar a IA de validacao de documentos</td><td>Guilherme</td><td style="color:#6366f1">pr em validacao</td></tr>
 <tr><td>Gov AM - Cadeado nos campos de portabilidade + ConsigFacil</td><td>Daniel</td><td style="color:#6366f1">pr em validacao</td></tr>
 <tr><td>APP - Refactor da tela de Dados Bancarios para inserir campo de PIX</td><td>Luiz</td><td style="color:#6366f1">pr em validacao</td></tr>
 <tr><td>API - Aceitar campo de pix no dados bancarios</td><td>Luiz</td><td style="color:#6366f1">pr em validacao</td></tr>
-<tr><td>[KonsiApp] - Redesign da tela de Ajustes (AC-689)</td><td>Luiz</td><td style="color:#f59e0b">p/ validar PR</td></tr>
-<tr><td>[KonsiApi] - Redesign da tela de Ajustes</td><td>Luiz</td><td style="color:#f59e0b">p/ validar PR</td></tr>
+<tr><td>[KonsiApp] - Redesign da tela de Ajustes (AC-689)</td><td>Luiz</td><td style="color:#6366f1">pr em validacao</td></tr>
+<tr><td>[KonsiApi] - Redesign da tela de Ajustes</td><td>Luiz</td><td style="color:#6366f1">pr em validacao</td></tr>
 <tr><td>Corrigir autenticacao no fluxo de desligamento Konsigleads</td><td>Luciano</td><td style="color:#f59e0b">p/ validar PR</td></tr>
 <tr><td>API - Implementacao dos eventos de receita do Facebook Ads</td><td>Luciano</td><td style="color:#f59e0b">p/ validar PR</td></tr>
 <tr><td>APP - Inserir Etapa de inclusao de Token em GovRJ</td><td>Daniel</td><td style="color:#f59e0b">em andamento</td></tr>
@@ -426,12 +426,12 @@ tr:hover td{background:#fafafa}
 </table>
 
 <div class="callout">
-<strong>Expectativa Sprint 19:</strong> Ultimo dia util (Sexta-feira Santa 03/04 é feriado + fim de semana). 34 cards planejados (apenas S19 — 6 anteriores nao contam). <strong>20 entregues</strong> (14 done + 5 em producao + 1 monitoring). 1 card em aprovacao (pr validada). 10 cards em desenvolvimento (4 PR em validacao + 4 p/ validar PR + 2 em andamento). 3 cards ready to dev. 0 dias uteis restantes. Projecao: <strong>23-27 cards</strong> dos 34 planejados (20 entregues + ~0.85 baixo risco + ~4.0 medio risco + ~0.3 alto risco ± 2).
+<strong>Expectativa Sprint 19:</strong> Ultimo dia util (Sexta-feira Santa 03/04 é feriado + fim de semana). 34 cards planejados (apenas S19 — 6 anteriores nao contam). <strong>20 entregues</strong> (14 done + 5 em producao + 1 monitoring). 2 cards em aprovacao (1 pr validada + 1 liberado testes). 9 cards em desenvolvimento (5 PR em validacao + 2 p/ validar PR + 2 em andamento). 3 cards ready to dev. 0 dias uteis restantes. Projecao: <strong>23-27 cards</strong> dos 34 planejados (20 entregues + ~1.7 baixo risco + ~3.6 medio risco + ~0.15 alto risco ± 2).
 </div>
 </div>
 </div>
 
-<div class="footer">Squad AppCore · Dados extraídos do ClickUp · Gerado em 02/04/2026 15:12</div>
+<div class="footer">Squad AppCore · Dados extraídos do ClickUp · Gerado em 02/04/2026 18:04</div>
 </div>
 
 <script>
@@ -489,10 +489,10 @@ function switchTab(id){
 }
 
 // S19 Status Donut
-new Chart(document.getElementById("chartS19Status"),{type:"doughnut",data:{labels:["Concluidos (20)","Aprovacao/Testes (1)","Em desenvolvimento (10)","Ready to dev (3)"],datasets:[{data:[20,1,10,3],backgroundColor:["#10b981","#6366f1","#f59e0b","#ef4444"],borderWidth:2,borderColor:"#fff"}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right"}}}});
+new Chart(document.getElementById("chartS19Status"),{type:"doughnut",data:{labels:["Concluidos (20)","Aprovacao/Testes (2)","Em desenvolvimento (9)","Ready to dev (3)"],datasets:[{data:[20,2,9,3],backgroundColor:["#10b981","#6366f1","#f59e0b","#ef4444"],borderWidth:2,borderColor:"#fff"}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right"}}}});
 
 // S19 Risk projection
-new Chart(document.getElementById("chartS19Risk"),{type:"bar",data:{labels:["Entregue","Baixo risco","Medio risco","Alto risco"],datasets:[{label:"Cards",data:[20,1,10,3],backgroundColor:["#10b981","#6366f1","#f59e0b","#ef4444"],borderRadius:6},{label:"Expectativa",data:[20,0.85,4.0,0.3],backgroundColor:["rgba(16,185,129,0.3)","rgba(99,102,241,0.3)","rgba(245,158,11,0.3)","rgba(239,68,68,0.3)"],borderColor:["#10b981","#6366f1","#f59e0b","#ef4444"],borderWidth:2,borderDash:[4,4],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:"top"}},scales:{y:{beginAtZero:true}}}});
+new Chart(document.getElementById("chartS19Risk"),{type:"bar",data:{labels:["Entregue","Baixo risco","Medio risco","Alto risco"],datasets:[{label:"Cards",data:[20,2,9,3],backgroundColor:["#10b981","#6366f1","#f59e0b","#ef4444"],borderRadius:6},{label:"Expectativa",data:[20,1.7,3.6,0.15],backgroundColor:["rgba(16,185,129,0.3)","rgba(99,102,241,0.3)","rgba(245,158,11,0.3)","rgba(239,68,68,0.3)"],borderColor:["#10b981","#6366f1","#f59e0b","#ef4444"],borderWidth:2,borderDash:[4,4],borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:"top"}},scales:{y:{beginAtZero:true}}}});
 
 </script>
 </body>
